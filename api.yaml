@@ -25,6 +25,7 @@ paths:
                     name:
                       type: string
                       example: "my-content-type"
+
     post:
       summary: Create a new Content Type
       requestBody:
@@ -45,6 +46,8 @@ paths:
           description: Bad Request
         "422":
           description: "Unprocessable Entity"
+          "500":
+          description: Internal Server Error
 
   /content-types/{id}:
     put:
@@ -73,6 +76,8 @@ paths:
           description: Bad Request
         "422":
           description: Unprocessable Entity
+        "500":
+          description: Internal Server Error
     delete:
       summary: Delete a Content Type
       parameters:
@@ -84,6 +89,8 @@ paths:
       responses:
         "204":
           description: Content Type deleted successfully
+        "500":
+          description: Internal Server Error
 
   /contents:
     get:
@@ -155,6 +162,8 @@ paths:
       responses:
         "201":
           description: Content created successfully
+        "500":
+          description: Internal Server Error
 
   /contents/{id}:
     put:
@@ -196,6 +205,8 @@ paths:
           description: Bad Request
         "422":
           description: Unprocessable Entity
+        "500":
+          description: Internal Server Error
 
     delete:
       summary: Delete Content
@@ -208,6 +219,8 @@ paths:
       responses:
         "204":
           description: Content deleted successfully
+        "500":
+          description: Internal Server Error
 
   /folders:
     post:
@@ -224,6 +237,8 @@ paths:
       responses:
         "201":
           description: Folder created successfully
+        "500":
+          description: Internal Server Error
 
   /folders/{id}:
     put:
@@ -250,6 +265,8 @@ paths:
           description: Bad Request
         "404":
           description: Folder not found
+        "422":
+          description: Unprocessable Entity
 
     delete:
       summary: Delete an existing Folder
@@ -262,6 +279,8 @@ paths:
       responses:
         "204":
           description: Folder deleted successfully
+        "500":
+          description: Internal Server Error
 
   /client-api/content/{id}:
     get:
@@ -279,7 +298,7 @@ paths:
             application/json:
               schema:
                 type: object
-                  properties:
+                properties:
                     id:
                       type: string
                     slug:
@@ -290,7 +309,7 @@ paths:
                       type: string
                     data:
                       type: object
-                        properties:
+                      properties:
                           title:
                             type: string
                           subtitle:
@@ -347,3 +366,4 @@ paths:
                       type: string
                     name:
                       type: string
+
