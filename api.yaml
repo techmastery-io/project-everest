@@ -38,7 +38,7 @@ paths:
                   type: string
                   example: "Blog Post"
                 schema:
-                  type: string
+                  type: object
       responses:
         "201":
           description: Content Type created successfully
