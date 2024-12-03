@@ -131,19 +131,6 @@ paths:
                   example: "beverage"
                 data:
                   type: object
-                  properties:
-                    title:
-                      type: string
-                      example: "Iced Tea"
-                    subtitle:
-                      type: string
-                      example: "Why is it so good?"
-                    body:
-                      type: string
-                      example: "Lorem Ipsum..."
-                    author:
-                      type: string
-                      example: "Jonas"
 
       responses:
         "201":
