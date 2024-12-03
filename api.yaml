@@ -115,15 +115,6 @@ paths:
                       type: string
                     data:
                       type: object
-                      properties:
-                        title:
-                          type: string
-                        subtitle:
-                          type: string
-                        body:
-                          type: string
-                        author:
-                          type: string
 
     post:
       summary: Create new Content
