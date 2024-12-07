@@ -1,0 +1,341 @@
+openapi: 3.0.0
+info:
+  title: Content Management API
+  description: API for managing content and content types.
+  version: 1.0.0
+servers:
+- url: https://api.everest.com/v1
+
+paths:
+  /content-types:
+    get:
+      summary: List all Content Types
+      responses:
+        "200":
+          description: A list of content types
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                      example: "my-content-type"
+
+    post:
+      summary: Create a new Content Type
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Blog Post"
+                schema:
+                  type: object
+      responses:
+        "201":
+          description: Content Type created successfully
+        "400":
+          description: Bad Request
+        "422":
+          description: "Unprocessable Entity"
+        "500":
+          description: Internal Server Error
+
+  /content-types/{id}:
+    put:
+      summary: Update a Content Type
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Updated Content Type Name"
+      responses:
+        "200":
+          description: Content Type updated successfully
+        "404":
+          description: Content Type not found
+        "400":
+          description: Bad Request
+        "422":
+          description: Unprocessable Entity
+        "500":
+          description: Internal Server Error
+    delete:
+      summary: Delete a Content Type
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: Content Type deleted successfully
+        "500":
+          description: Internal Server Error
+
+  /contents:
+    get:
+      summary: List all Contents
+      responses:
+        "200":
+          description: A list of content items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    slug:
+                      type: string
+                    is_published:
+                      type: boolean
+                    type_id:
+                      type: string
+                    data:
+                      type: object
+
+    post:
+      summary: Create new Content
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type_id:
+                  type: string
+                slug:
+                  type: string
+                  example: "beverage"
+                data:
+                  type: object
+
+      responses:
+        "201":
+          description: Content created successfully
+        "500":
+          description: Internal Server Error
+
+  /contents/{id}:
+    put:
+      summary: Update Content
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                slug:
+                  type: string
+                  example: "food"
+                data:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      example: "Chocolate Cake"
+                    subtitle:
+                      type: string
+                      example: "What makes it the best cake flavour?"
+                    body:
+                      type: string
+                      example: "Lorem Ipsum"
+
+      responses:
+        "200":
+          description: Content updated successfully
+        "404":
+          description: Content not found
+        "400":
+          description: Bad Request
+        "422":
+          description: Unprocessable Entity
+        "500":
+          description: Internal Server Error
+
+    delete:
+      summary: Delete Content
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: Content deleted successfully
+        "500":
+          description: Internal Server Error
+
+  /folders:
+    post:
+      summary: Create new Folder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "New Folder"
+      responses:
+        "201":
+          description: Folder created successfully
+        "500":
+          description: Internal Server Error
+
+  /folders/{id}:
+    put:
+      summary: Update an existing Folder
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Updated Folder"
+      responses:
+        "200":
+          description: Folder updated successfully
+        "400":
+          description: Bad Request
+        "404":
+          description: Folder not found
+        "422":
+          description: Unprocessable Entity
+
+    delete:
+      summary: Delete an existing Folder
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: Folder deleted successfully
+        "500":
+          description: Internal Server Error
+
+  /client-api/content/{id}:
+    get:
+      summary: Fetch content by ID or key
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Content retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    id:
+                      type: string
+                    slug:
+                      type: string
+                    is_published:
+                      type: boolean
+                    type_id:
+                      type: string
+                    data:
+                      type: object
+                      properties:
+                          title:
+                            type: string
+                          subtitle:
+                            type: string
+                          body:
+                            type: string
+                          author:
+                            type: string
+
+  /client-api/folders/{folderId}/contents:
+    get:
+      summary: List all content in a folder
+      parameters:
+      - name: folderId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: A list of content items in the folder
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+
+  /client-api/content-type/{typeId}/contents:
+    get:
+      summary: List all content by type
+      parameters:
+      - name: typeId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: A list of content items of the specified type
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
