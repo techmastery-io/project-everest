@@ -8,7 +8,10 @@ dependencies = [
     "fastapi[standard]>=0.115.6",
     "pytest>=8.3.4",
 ]
+<<<<<<< HEAD
 
 
 [tool.ruff]
 line-length = 120
+=======
+>>>>>>> origin/chores/be-install-uv-and-poetry
