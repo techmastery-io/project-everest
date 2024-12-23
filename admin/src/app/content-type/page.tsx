@@ -1,3 +1,3 @@
 export default function ContentTypePage() {
-  return <div className="flex">Conteudo Content Type</div>;
+  return <div className="flex">Body: Content Type</div>;
 }
