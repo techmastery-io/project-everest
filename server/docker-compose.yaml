@@ -1,16 +1,31 @@
-version: '3.8'
 services:
   postgres:
-    image: postgres
+    image: postgres:14.5-alpine
     container_name: postgres
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASS}
+      POSTGRES_DB: ${DATABASE_DB}
     volumes:
       - my-volume:/var/lib/postgresql/data
+
+  everest_app:
+    image: everest 
+    build: .
+    container_name: everest_app
+    environment:
+      PORT: 8000
+    ports:
+      - '8000:8000'
+    depends_on:
+      postgres:
+        condition: service_started
+    volumes:
+      - .:/app
+      - /app/.venv
+    
 
 volumes:
   my-volume:
